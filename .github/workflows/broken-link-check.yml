@@ -1,0 +1,22 @@
+name: "Broken Link Checker"
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'
+    - cron: '0 2 * * 0'
+
+jobs:
+  link-check:
+    name: Check for broken links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run lychee link checker
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: "--verbose --timeout 30 ."
